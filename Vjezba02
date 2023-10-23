@@ -1,0 +1,126 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_CHAR 1000
+#define EXIT_SUCCESS 0
+
+
+struct _Person; //deklaracija strukture, ali ne i inicijalizacija ->cilj je da možemo deklarirati pokazivač tipa _Person koji je dio strukture koja još nije inicijalizirana
+typedef struct _Person* Position; //deklaracija pokazivača Position koji je tipa _Person, a korisiti se tako da svaki član jednostruke liste
+//sadržava pokazivač na sljedeći član liste (s time da nitko ne pokazuje na head i zadnji član pokazuje na NULL). Tako da trenutno ne pokazuje na išta?
+typedef struct _Person {
+	char name[MAX_CHAR];//char element koji svaki član js liste ima
+	char surname[MAX_CHAR];//char element koji svaki član js liste ima
+	int birthYear;//int element koji svaki član js liste ime
+	Position next;//tip varijable je Position, ime varijable je next? ILI Position je sam po sebi varijabla, ime pokazivača i ovo je specifičan način inicijalizacije da je
+	//Position pokazivač koji pokazuje na adresu/vrijednost koja je u memoriji spremljena pod imenom next
+} Person; //postavili smo typedef naravno
+
+int Menu(Position,int);
+int addElementAtTheBeginning(Position);
+int showList(Position);
+int addElementAtTheEnd(Position);
+
+int main() {
+
+ int number_of_wanted_service = 0;
+ Person Head = { .name = {0},.surname = {0},.birthYear = 0, .next = NULL, };//inicijalizacija Head-a sve na neutralnu vrijednost
+ while(number_of_wanted_service>=0){
+     printf("\n \n \n To exit the program enter any negative number! \n Choose service you want to access by providing coresponding number next to it in a written menu. \n 1 -adds new element at the beginning of the list \n");
+     scanf("%d", &number_of_wanted_service);
+     //printf("number_of_wanted_service is: %d", number_of_wanted_service);
+     Menu(&Head,number_of_wanted_service);
+ }
+ 
+ 
+ 
+	return 0;
+}
+
+int Menu(Position Head, int number_of_wanted_service){
+    switch(number_of_wanted_service){
+        case 1:
+         addElementAtTheBeginning(Head); //uzimamo Head, a ne &Head jer je Menu funkcija primila adresu pa je Head zapravo adresa
+         return EXIT_SUCCESS;
+         break;
+         
+        case 2:
+         showList(Head->next);
+         return EXIT_SUCCESS;
+         break;
+         
+        case 3:
+         addElementAtTheEnd(Head);
+         return EXIT_SUCCESS;
+         break;
+        
+        default:
+         printf("Number not recognized, please try again.");
+    }
+    
+}
+
+int addElementAtTheBeginning(Position current) {
+    
+    char new_name[MAX_CHAR] = {0};
+    char new_surname[MAX_CHAR] = {0};
+    int new_birthYear = 0;
+    
+    Position new =(Position)malloc(sizeof(Person));
+    printf("Name?\n");
+    scanf("%s", new_name);
+    printf("Surname?\n");
+    scanf("%s", new_surname);
+    printf("Year of birth? \n");
+    scanf("%d", &new_birthYear);
+    strcpy(new->name, new_name);
+    strcpy(new->surname, new_surname);
+    new->birthYear=new_birthYear;
+    
+    new->next=current->next; //novi član pokazuje na prethodni prvi član
+    
+    current->next=new; //head pokazuje na novi član
+    
+    
+    //printf("\n %s \n %s \n %d \n %d", new_name, new->name, new_birthYear, new->birthYear);
+    
+
+	return EXIT_SUCCESS;
+}
+
+int showList(Position current){
+    while(current!=NULL){
+        printf("\n");
+        printf("\n %s \n %s \n %d", current->name, current->surname, current->birthYear);
+        current=current->next;
+    }
+    
+    return EXIT_SUCCESS;
+}
+
+int addElementAtTheEnd(Position current){
+    
+    while(current->next!=NULL){
+        current=current->next;
+    }
+    
+    char new_name[MAX_CHAR] = {0};
+    char new_surname[MAX_CHAR] = {0};
+    int new_birthYear = 0;
+    
+    Position new =(Position)malloc(sizeof(Person));
+    printf("Name?\n");
+    scanf("%s", new_name);
+    printf("Surname?\n");
+    scanf("%s", new_surname);
+    printf("Year of birth? \n");
+    scanf("%d", &new_birthYear);
+    strcpy(new->name, new_name);
+    strcpy(new->surname, new_surname);
+    
+    current->next=new;
+    new->next=NULL;
+    
+    return EXIT_SUCCESS;
+}
