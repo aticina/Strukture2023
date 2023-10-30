@@ -24,7 +24,7 @@ typedef struct _Person {
 int Menu(Position, int);
 Position CreateElement();
 Position findPreviousBySurname(Position);
-Position findFollowingBySurname(Position);
+Position findFollowingBySurname(Position);//<-obsolete function, use next on whatever element you need to find them
 int addElementAtTheBeginning(Position);
 int showList(Position);
 int addElementAtTheEnd(Position);
@@ -282,3 +282,33 @@ int addBehindOf(Position current) {
     free(new);
     return EXIT_SUCCESS;
 }
+zapis polinoma u datoteci V
+1x^2 3x^3 4x^7 5x^5
+mogu biti i negativni brojevi i nula, moramo ih poredati po padajućim eksponentima
+slažemo ove u struct
+imamo 4 liste (pol1,pol2,njihov zbroj,njihov umnožak)
+i čitamo ih i spremamo iz datoteke
+funk readFile(˛pol1,˛pol2,FILE*)
+provjeri jemo li otvorili file
+fgets-čita red u buffer iz kojeg kasnije čitamo što trebamo
+%dx^%d %n ovako čitamo formatirano iz datoteke
+sscanf
+newel=createel-spremamo stvari u strukturu, pri unosu sortiramo
+neka merge after funkcija
+
+H-NULL
+novi el stvorimo4x^2 
+idemo u insert sorted pa unutri je
+while(current->next!=NULL && current->next->exponent>newelement->exponent
+current=current->next 
+int mergeafter(position current, position newelemenmt){
+newelement->next=current->next
+current->next=newelement}
+mergeafter(Position current, position newelement){
+if(cur->next==NULL II cur->next->exponent!=newelement->exponent
+insertafter(current,neweleement)
+
+nama ti polinomi ne moraju biti maksimalno sređeni i skraćeni, moramo na to paziti u programu
+koristimo i funkciju delete after
+
+currentBuffer+=numbBytes čitamo iz buffera tako da mu hopsamo s adrese na adresu
