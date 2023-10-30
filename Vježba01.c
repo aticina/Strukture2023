@@ -5,11 +5,17 @@ studenata (ime, prezime, bodovi) i uèitati iz datoteke sve zapise. Na ekran isp
 prezime, apsolutni i relativni broj bodova.
 Napomena: Svaki redak datoteke sadrži ime i prezime studenta, te broj bodova na kolokviju.
 relatvan_br_bodova = br_bodova/max_br_bodova*100
-
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define MAX_CHAR 2024
+#define FILE_NOT_OPEN -1
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
+int Broj_Redaka(char imeDatoteke[MAX_CHAR]);
+int Unos_Studenata_U_Niz(int);
 
 typedef struct student {
     char ime[MAX_CHAR];
@@ -45,33 +51,28 @@ int main()
 
     return 0;
 }
-1. Napisati program koji prvo proita koliko redaka ima datoteka, tj. koliko ima studenata
-zapisanih u datoteci. Nakon toga potrebno je dinamiki alocirati prostor za niz struktura
-studenata (ime, prezime, bodovi) i uitati iz datoteke sve zapise. Na ekran ispisati ime,
-prezime, apsolutni i relativni broj bodova.
-Napomena: Svaki redak datoteke sadri ime i prezime studenta, te broj bodova na kolokviju.
-relatvan_br_bodova = br_bodova/max_br_bodova*100
 
-*/
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
-#define MAX_CHAR 2024
-#define FILE_NOT_OPEN -1
-#define EXIT_SUCCESS 0
-#define EXIT_FAILURE 1
+void citanjeStud(Student* stud,int brStud, char imeDatoteke[MAXNAME]){
+    FILE *fp=NULL;
+    int i=0;
 
-typedef struct student {
-	char ime[MAX_CHAR];
-	char prezime[MAX_CHAR];
-	double bodovi;
-} Student;
+    fp=fopen(imeDatoteke, "r");
+    if(fp==NULL)
+        printf("Greska! Datoteka ne moze biti otvorena. \n");
+    else
+        printf("Datoteka uspješno otvorena \n");
+
+    for(i=0;i<brStud;i++)
+        fscanf(fp,"%s %s %d\n", (stud+i)->ime,(stud+i)->prezime,&((stud+i)->bodovi));
+
+    fclose(fp);
+    return;
+}
+
 //student[counter].name ili *(student+i).name
 //%.2lf za ispis realnog broja na dvi decimale
 //za scanf dodajemo u ciljnu varijablu & npr. scanf("%s %lf",niz,&broj) za string nam to ne treba niti array jer je samo ime niza ili stringa pointer na tu varijablu
 //int Broj_Redaka(FILE*,int); ovo je loše, ne prosljeđuj file pointer funkciji nego sve odradi u funkciji otvaranje i zatvaranje
-int Broj_Redaka(int);
-int Unos_Studenata_U_Niz(int);
 
 int main()
 {
@@ -134,7 +135,7 @@ int Broj_Redaka( int br_r) {
 
 	return br_r;
 }
-#define _CRT_SECURE_NO_WARNINGS
+/*#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -165,7 +166,7 @@ int main() {
 
 int Menu(Position Head) {
 
-}
+}*/
 
 //srtcpy(string u koji kopiramo vrijednost, string iz kojeg kopiramo vrijednost)
 //student->ime=ime ne radi jer su pokazivači lokacije, a mi želimo baratai vrijednostima
