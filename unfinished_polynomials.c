@@ -14,6 +14,10 @@ typedef struct _Element{
     Position next;
 } Element;
 
+int polynomialFunctionInput(Position,Position);
+int polynomialSum();
+int polynomialProduct();
+
 int main(){
     
     char p1[MAX_CHAR]= {0};
@@ -21,10 +25,7 @@ int main(){
     Element Head1 = { .coefficient=0, .exponent=0, .next=NULL}; //list for 1st polynomial function, momentarily empty
     Element Head2 = { .coefficient=0, .exponent=0, .next=NULL}; //list for 2nd polynomial function momentarily empty
     
-    FILE* file_pointer;
-    file_pointer=fopen("polinom.txt","r");
     
-    if(!file_pointer) printf("File failed to open!");
     
     fgets(p1,MAX_CHAR,file_pointer);//we read 1st line in the file, we got out 1st polynomial function, but in string form
     fgets(p2,MAX_CHAR,file_pointer);
@@ -39,3 +40,24 @@ int main(){
     
     return EXIT_SUCCESS;
 }
+
+int polynomialFunctionInput(Position current1, Position current2){
+
+    FILE* file_pointer;
+    file_pointer=fopen("polinom.txt","r");
+    
+    if(!file_pointer) printf("File failed to open!");
+
+    fclose(file_pointer);
+}
+/*sortirani unos u listu, pokušaj naći kodove od drugih da vidiš kako to funkcionira
+i printaj polinome
+zbrajanje 2 načina
+1->zbrajanmo dok oba polinoma ne dodu do kraja(veznik i), 3 slučaja, ako su im eksponenti isti createandinsertafter(zove se u sva 3 slučaja)(unos u listu sa zbrojem)
+ako mi je expo2 veći od expo 2 unosimo samo veći u polinom, ako expo 1 veći unosimo samo 1 u rezultantu listu;
+current polinoma su prvi non-empty, currrent sume je head
+ako nam od nekog polinoma ostane nešto kad jje drugi na nuli, onda to rješimo ispod tri uvjeta currentpoly1==NULL remainingpoly=poly 2 else remaining poly=poly2
+programerski način
+current poly1 i i 2 su prvi non-empty članovi, unsemo sve element 1 polinoma u listu sume te idemo po drugom polinomu i zbrajamo koeficijenete ako su im eksponentii isti, a samo dodamo novi član s novim eksponentom ako nije već u sum to samo doda u sumu lista
+
+*/
