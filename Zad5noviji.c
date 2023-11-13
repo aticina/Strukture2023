@@ -15,6 +15,9 @@ typedef struct _Stack{
 } Stack;
 
 int readFromFile(Position);
+int push(Position, double);
+double pop(Position);
+int operation(Position, char);
 
 int main(){
     //we are putting operands on stack, when we receive an operator we pop two
@@ -23,20 +26,19 @@ int main(){
     Stack Head={ .number=0, .next=NULL};
     readFromFile(&Head); //we are not sending Head-next cause stack is empty, so Head->next is NULL
     //Head by itself is nothing cause it is an empty element of type Stack, so we are sending it's address
-    
+    printf("Result is: %lf", Head.next->number);
     
   return EXIT_SUCCESS;
 }
 
-int readFromFile(Position current){
+int readFromFile(Position current){ //current is &Head
     
     char loaded_string[MAX_CHAR]={0};
     char* pointer_within_loaded_string = NULL; //with this we can move through string, without index
     pointer_within_loaded_string=loaded_string;
     double number_from_postfix=0;
-    int checker=0;
     int status=0;
-    char _operator={0};
+    char operation_type = {0}; //ISSUE! IT SAYS OPERATION_TYPE IS INT FOR SOME REASON!
     
     FILE* file_pointer;
     file_pointer=fopen("postfiks.txt","r");
@@ -50,19 +52,13 @@ int readFromFile(Position current){
     //printf("%s",loaded_string); we loaded correctly
     
     //pointer_within_loaded_string will in first loop be pointing at loaded_string[0]
-    //and with each +=checker we iterate so in our example if we go through rest of function:
-    //2.000000 2      0x7ffefa6169d0
-    // ^we read a double 2.000000 from file plus empty space behind it, checker=2, status=2 
-    //so we enter else, we are at loaded_string[0], we are ready to read a character(+,- or *)
-    //
-    //2.000000 1      0x7ffefa6169d2
-    //2.000000 1      0x7ffefa6169d3
-    //3.000000 1      0x7ffefa6169d4
-    //-5.000000 2     0x7ffefa6169d5
-    //3.000000 3      0x7ffefa6169d7
-    //3.000000 1      0x7ffefa6169da
-    //3.000000 1      0x7ffefa6169db
-    //3.000000 1      0x7ffefa6169dc
+    //and with it we iterate so in our example +2 cause we are taking into account
+    //the fact tha format we expect is that all operands and operators have to be 
+    //separated by 1 space 
+    //If we go through rest of function we see 2 case scenarios
+    // 1st we load a double, status=1 (doesn't matter if double is positive or negative it reads as 1 it counts as one [index]in string)
+    //2nd we don't load anything,status==0,so we load operator
+   
     while(strlen(pointer_within_loaded_string)>0){
         //sscanf returns number of chracters read if successful and -1 if it failed
         // %n returns the number of characters that sscanf read in total in this turn
@@ -72,24 +68,23 @@ int readFromFile(Position current){
             printf("Failure at loading postfix.");
             return EXIT_FAILURE;
         }
-        printf("\n %lf %d", number_from_postfix, status);
-        printf("\t %p", pointer_within_loaded_string);
+        //printf("\n %lf %d", number_from_postfix, status);
+        //printf("\t %p", pointer_within_loaded_string);
         
-        if(number_from_postfix>=0 && status==1){
-            //push();
+        if(status==1){
+            push(current, number_from_postfix);
             pointer_within_loaded_string+=2;
-            printf("Pozitiva");
-        }
-        else if(number_from_postfix<0 && status==1){
-            pointer_within_loaded_string+=2;
-            printf("Negativa");
-            
         }
         else if(status==0){
-            printf("STATUS 0");
-            sscanf(pointer_within_loaded_string," %c", &_operator);
-            printf("Operator je: %c", _operator);
-            //operation();
+            //printf("STATUS 0");
+            sscanf(pointer_within_loaded_string," %c", operation_type);
+            if(status==-1){
+                printf("Failure at loading postfix.");
+                return EXIT_FAILURE;
+                
+            }
+            //printf("Operator je: %c", _operator);
+            operation(current, operation_type);
             pointer_within_loaded_string+=2;
         }
     }
@@ -98,22 +93,68 @@ int readFromFile(Position current){
     fclose(file_pointer);
     return EXIT_SUCCESS;
 }
-/*while/strlen(currentbuffer))>0){
-status=sscanf(currentbuff, %lf %n",&number, &numbytes)
-if(status!=1){
-  sscanf(currentbuffer," %c %n", &operation, &numbytes)
-  status=popandpreformoperation(head,operation,result)
-  if(status !=EXIT_SUC)
-    return EXIT_F
 
-  number=*result
+int push(Position current, double number_from_postfix){//add at the beginning for linked lists==push in stack
+    
+    Position new = (Position)malloc(sizeof(Stack));
+    if(new==NULL){
+        printf("Malloc couldn't allocate memory!");
+        return EXIT_FAILURE;
+    }
+    
+    new->number=number_from_postfix;
+    new->next=current->next;
+    current->next=new;
+    
+    free(new);
+    
+    return EXIT_SUCCESS;
 }
-newstackelement=createstackelelmentt(number)
-if(!newstackelement) return exit_value
+
+double pop(Position current){//it's like delete from the beginning
+
+    double r_number=0;
+    Position to_be_deleted = current->next;
+    current->next=current->next->next;
+    
+    r_number=to_be_deleted->number;
+    
+    free(to_be_deleted);
+    
+    
+    return r_number;
 }
-current buffer+= numbytes
-printf("I%sI <-->" currentbuffer):;
-push(head, newstackelement)
-}ovdje valjda zavrsava while
-return checkstackandextractresult(head, result)
-*/
+
+int operation(Position current, char operation_type){ //current is &Head
+    
+    double operand1=0;
+    double operand2=0;
+    
+    switch(operation_type){
+        
+        case "+":
+            operand1=pop(current);
+            operand2=pop(current);
+            push(current, operand1+operand2);
+            break;
+        
+        case "-":
+            operand1=pop(current);
+            operand2=pop(current);
+            push(current, operand2-operand1); //or 1-2 ?
+            break;
+            
+        case "*":
+            operand1=pop(current);
+            operand2=pop(current);
+            push(current, operand1*operand2);
+            break;
+            
+        case "/":
+            operand1=pop(current);
+            operand2=pop(current);
+            push(current, operand2/operand1);
+            break;
+    }
+    return EXIT_SUCCESS;
+}
