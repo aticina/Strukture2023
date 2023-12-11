@@ -19,9 +19,9 @@ typedef struct directory{
     Position child;//points at 1st of however many child directories(all children are in the contected list, new ones are added at the beginning)
 } Directory;
 
-Position Menu(int,Position);
+Position Menu(int,Position,Position);
 Position MakeDirectory(Position);
-//int ChangeDirectory(Position, char[]);
+Position ChangeDirectory(Position,Position);
 
 
 int main(){
@@ -43,21 +43,22 @@ int main(){
     
     scanf("%d", &key_number);
     
-    Current=Menu(key_number,Current);
+    Current=Menu(key_number,Current,&Head);
     }
     
     return EXIT_SUCCESS;
 }
 
-Position Menu(int key_number,Position Current){
+Position Menu(int key_number,Position Current,Position Root){
     
     switch (key_number){
     case 0:
         Current=MakeDirectory(Current);//current je promjenjiv, može biti root ali ne mora, ovisi o cd funkciji?
         break;
-    /*case 1:
+    case 1:
+        Current=ChangeDirectory(Current,Root);
         break;
-    case 2:
+    /*case 2:
         break;
     case 3:
         break;*/
@@ -73,7 +74,7 @@ Position Menu(int key_number,Position Current){
 }
 
 Position MakeDirectory(Position Current){//function receives directory
-    printf("%s\n",Current->name);
+    printf("Check up: %s\n",Current->name);
     char new_name[MAX_CHAR]=" ";
     printf("You are creating a new directory which will be a sub-directory of a current working directory.\nEnter name of new directory: \n");
     scanf("%s",new_name);
@@ -89,7 +90,30 @@ Position MakeDirectory(Position Current){//function receives directory
     //with this new directory has name, next and no children. If current directory has no children to begin with
     //new directory will point to NULL just like current used to, and current will point at new dir
     Current=new_dir;//this is so we immidenatly position ourselves in newly created directory, we cd but automatically
-    printf("%s\n",Current->name);
+    printf("Check up: %s\n",Current->name);
     return Current;
+    
+}
+
+Position ChangeDirectory(Position Current,Position Root){
+    printf("Check up: %s\n",Current->name);
+    //char method=" ";
+    char path[MAX_CHAR]=" ";
+    printf("You are changing directory. Please enter path to wanted directory:\n");
+    scanf("%s",path);
+    
+    /*printf("You are changing directory. Do you want to use absolute or relative path?\nEnter A for absolute or R for relative:\n");
+    scanf("%c",&method);
+    if(method=="A"){
+        Current=Root;
+        printf("Please enter the path")
+    }
+    else if(method=="R"){
+        
+    }
+    else{
+        printf("You made unrecognizable entry, please try again.");
+        return Current;
+    }*/
     
 }
