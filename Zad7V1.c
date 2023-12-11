@@ -115,5 +115,38 @@ Position ChangeDirectory(Position Current,Position Root){
         printf("You made unrecognizable entry, please try again.");
         return Current;
     }*/
+    Position ChangeDirectory(Position Current,Position Root){
+    printf("Check up: %s\n",Current->name);
+    //char method=" ";
+    char path[MAX_CHAR]="";
+    char dir_name[MAX_CHAR]="";
+    int i=1;
+    Position end_seeker=(Position)malloc(sizeof(Directory));//this pointer will walk through the tree till it reaches the leaf, it alerts us when there is no subdirectories
+    printf("You are changing directory. Please enter path to wanted directory:\n");
+    scanf("%s",path);
+    while(Current->child!=NULL){
+        //for loop for going through path string
+        for(i;i<MAX_CHAR;i++){
+            while(path[i]!='/'){
+                strncat(dir_name,&path[i],1);
+            }
+            printf("%s",dir_name);
+        }
+        
+    }
+    /*printf("You are changing directory. Do you want to use absolute or relative path?\nEnter A for absolute or R for relative:\n");
+    scanf("%c",&method);
+    if(method=="A"){
+        Current=Root;
+        printf("Please enter the path")
+    }
+    else if(method=="R"){
+        
+    }
+    else{
+        printf("You made unrecognizable entry, please try again.");
+        return Current;
+    }*/
     
+}
 }
