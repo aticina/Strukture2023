@@ -1,0 +1,60 @@
+zadatak 8 Napisati program koji omogućava rad s binarnim stablom pretraživanja. Treba
+omogućiti unošenje novog elementa u stablo, ispis elemenata (inorder, preorder, postorder i
+level order), brisanje i pronalaženje nekog elementa.
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_CHAR 1000
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
+struct node;
+typedef struct node* Position;
+typedef struct node {
+    int value;
+    Position left;//points at left node,smaller value
+    Position right;//points at right node,bigger value
+} Node;
+
+int main(){
+
+return EXIT_SUCCESS;
+}
+
+stabla vole rekurziju
+trebas Menu: unos(stvara novi element dinamički i vraća memorijsku lokaiju nove node),trazi(izlazimo kao nademo node, ili ako nismo nasli vrijednost vec null),brisi(!),preorde,inorder,postorder,levelorder,exit program
+1.trebamo pitati korisika za prvu vrijednost iz koje gradimo stablo, to je root value npr.7,4,9,2,5,8,13
+Position insert(pos root, vallue-) ide do lista nekako pa se rekurzija npravi prije nego se krene opet u petlje petlje
+  if(root==null)
+    return createNode(on je isto kao create element,  prima value,vraca poziciju)
+  if(v<rv)
+    r->l=insert(r->l,v)
+  else if(v>rv)
+    r->r=insert(r->r,v)
+  return root
+------------
+int inorder(pos root)
+  if(r!=NULL
+    inorder(r->l)
+    printf(r->v)
+    inorder(root->r)
+  return exit success
+-------------
+int preorder(pos root)
+  if(root!=null
+    print(r->v)
+    preorer(r->l)
+    preorder(r->r)
+  return exit sucess
+-------
+int postorder(pos root)
+  if(r!=null
+    postorder(r->l,v)
+    postorder(r->r,v)
+    printf(r->v)
+  return exit sucess
+-----------
+
+
