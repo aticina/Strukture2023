@@ -171,9 +171,10 @@ typedef struct directory{
     Position child;//points at 1st of however many child directories(all children are in the contected list, new ones are added at the beginning)
 } Directory;
 
-Position Menu(int,Position,Position);
+Position Menu(int,Position);
 Position MakeDirectory(Position);
-Position ChangeDirectory(Position,Position);
+Position ChangeDirectory(Position);
+int Display(Position);
 
 
 int main(){
@@ -195,25 +196,26 @@ int main(){
     
     scanf("%d", &key_number);
     
-    Current=Menu(key_number,Current,&Head);
+    Current=Menu(key_number,Current);
     }
     
     return EXIT_SUCCESS;
 }
 
-Position Menu(int key_number,Position Current,Position Root){
+Position Menu(int key_number,Position Current){
     
     switch (key_number){
     case 0:
         Current=MakeDirectory(Current);//current je promjenjiv, može biti root ali ne mora, ovisi o cd funkciji?
         break;
     case 1:
-        Current=ChangeDirectory(Current,Root);
+        Current=ChangeDirectory(Current);
         break;
     /*case 2:
-        break;
-    case 3:
         break;*/
+    case 3:
+        Display(Current);
+        break;
     case 4:
         exit(0);//void exit(status) is function that shuts down the program and closes all streams it used,
         //temporary data gets deleted, buffer/working memory gets flushed, it's in stdlib.h
@@ -247,27 +249,7 @@ Position MakeDirectory(Position Current){//function receives directory
     
 }
 
-Position ChangeDirectory(Position Current,Position Root){
-    printf("Check up: %s\n",Current->name);
-    //char method=" ";
-    char path[MAX_CHAR]=" ";
-    printf("You are changing directory. Please enter path to wanted directory:\n");
-    scanf("%s",path);
-    
-    /*printf("You are changing directory. Do you want to use absolute or relative path?\nEnter A for absolute or R for relative:\n");
-    scanf("%c",&method);
-    if(method=="A"){
-        Current=Root;
-        printf("Please enter the path")
-    }
-    else if(method=="R"){
-        
-    }
-    else{
-        printf("You made unrecognizable entry, please try again.");
-        return Current;
-    }*/
-    Position ChangeDirectory(Position Current,Position Root){
+Position ChangeDirectory(Position Current){
     printf("Check up: %s\n",Current->name);
     //char method=" ";
     char path[MAX_CHAR]="";
@@ -310,4 +292,19 @@ Position ChangeDirectory(Position Current,Position Root){
     //2nd for loop i=6(cause i++ in for increased it from 5),entering while(path[6] aka 'h'!='/')TRUE and so on
 
     
+}
+
+int Display(Position Current){
+    printf("These are all things(dir or files?) in this %s directory:\n\n", Current->name);
+    //we need to list out children's names
+    if(Current->child==NULL){
+        printf("EMPTY!NO FILES IN THIS DIRECTORY!");
+        return EXIT_SUCCESS;//? or fail or..?
+    }
+    Current=Current->child;//entering 1st member of list of children
+    while(Current->next!=NULL){
+        printf("%s",Current->name);
+        Current=Current->next;
+    }
+    return EXIT_SUCCESS;
 }
