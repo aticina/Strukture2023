@@ -56,5 +56,131 @@ int postorder(pos root)
     printf(r->v)
   return exit sucess
 -----------
+/*zadatak 8 Napisati program koji omogućava rad s binarnim stablom pretraživanja. Treba
+omogućiti unošenje novog elementa u stablo, ispis elemenata (inorder, preorder, postorder i
+level order), brisanje i pronalaženje nekog elementa.
+stabla vole rekurziju
+trebas Menu: unos(stvara novi element dinamički i vraća memorijsku lokaiju nove node),trazi(izlazimo kao nademo node, ili ako nismo nasli vrijednost vec null),brisi(!),preorde,inorder,postorder,levelorder,exit program
+1.trebamo pitati korisika za prvu vrijednost iz koje gradimo stablo, to je root value npr.7,4,9,2,5,8,13
+Position insert(pos root, vallue-) ide do lista nekako pa se rekurzija npravi prije nego se krene opet u petlje petlje
+  if(root==null)
+    return createNode(on je isto kao create element,  prima value,vraca poziciju)
+  if(v<rv)
+    r->l=insert(r->l,v)
+  else if(v>rv)
+    r->r=insert(r->r,v)
+  return root
+------------
+int inorder(pos root)
+  if(r!=NULL
+    inorder(r->l)
+    printf(r->v)
+    inorder(root->r)
+  return exit success
+-------------
+int preorder(pos root)
+  if(root!=null
+    print(r->v)
+    preorer(r->l)
+    preorder(r->r)
+  return exit sucess
+-------
+int postorder(pos root)
+  if(r!=null
+    postorder(r->l,v)
+    postorder(r->r,v)
+    printf(r->v)
+  return exit sucess*/
 
+#include _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE -1
+#define MAX_CHAR 1023
+
+struct node;
+typedef struct node* Position;
+typedef struct node{
+    int value;
+    Position left;
+    Positon right;
+} Node;
+
+Position Menu(int,Position);//we are returning Position cause we are always at some node, we must keep thrack of where during and after every action
+Position CreateNode(int);
+Position Add(Position,int);
+int main(){
+    
+    int first_root_value=0;
+    int service_id=8;
+    node Root={.value=0, .left=NULL, .right=NULL};
+    
+    printf("Hello ^^ welcome to binary tree! Please provide value for root node: \n");
+    scanf("%d", &first_root_value);
+    Root->value=first_root_value;
+    
+    printf("Input one of the numbers to activate coresponding action:\n"
+    "0 -add new node\n"
+    "1 -preorder\n"
+    "2 -inorder\n"
+    "3 -postorder\n"
+    "4 -levelorder\n"
+    "5 -delete node\n"
+    "6 -find node\n"
+    "7 -exit program\n\n"
+    "Your choice: \n");
+    scanf("%d", &service_id);
+    Menu(service_id,&Root);
+    
+    return EXIT_SUCCESS;
+}
+
+Position Menu(int service_id, Position current){
+    switch(service_id){
+        case 0:
+            int new_value=0;
+            printf("New value?\n");
+            scanf("%d",&new_value);
+            Add(current,new_value);
+            return EXIT_SUCCESS;
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            exit(0);//exit(0) means successful ending of programs workings and tidy closing up of all streams and stuff
+            break;
+    }
+}
+
+Position CreateNode(int value){
+    Position new_node=(Position)malloc(sizeof(Node));
+    new_node->value=value;
+    new_node->left=NULL;
+    new_node->right=NULL;
+    return new_node;
+}
+
+Position Add(Position current, int value){
+    if(current==NULL){
+        return CreateNode(value);
+    }
+    else if(current->value<value){
+        current->left=Add(current->left,value);
+    }
+    else if(current->value>value){
+        current->right=Add(current->right,value);
+    }
+    return current;//just in case nothing happens..?
+}
 
