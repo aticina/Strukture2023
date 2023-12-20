@@ -184,3 +184,36 @@ Position Add(Position current, int value){
     return current;//just in case nothing happens..?
 }
 
+Position delete(position r, int value) uses find node function for help
+    if v<rv
+        rl=delete(rl,v)
+    else if v>rv
+        rr=delete(rr,v)
+    elese
+        if rl == null
+
+elseif rr==null
+    pos temp=rleft
+    free(root------)
+    return temp
+/with 2 kids
+    pos temp=rr
+    while templeft!=null
+        temp=templeft
+    rv=tempv
+    rr=delete(rr,tempv)
+
+return root
+
+zzzzzzzzzz9
+9a)add funkcija iz z8 ali manji elelmenti su desno, a ne lijevo, no to zanemarimo jer je svejeno možemo korisiti bilo koje bin stablo pa ovo ne treba, samo dodaj 9 B) i C) u zad 8
+b)replace prima root, rekurzivna i vraća int
+int replace(pos reoot)
+    if r==NULL
+        return 0
+    int leftval=replace(rl)
+    int rightval=replace(rr)
+    int originalval=rv
+    rv=lef6tval+rightval
+    return originalval+rv
+c)random numbers and inorder put in a file
