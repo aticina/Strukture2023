@@ -19,6 +19,9 @@ Position Add(Position,int);
 int Preorder(Position);
 int Inorder(Position);
 int Postorder(Position);
+int Levelorder(Position);
+int Depth(Position);
+int CurrentLevel(Position, int);
 Position Delete(Position,int);
 Position Find(Position);
 
@@ -71,6 +74,8 @@ Position Menu(int service_id, Position current){
             return EXIT_SUCCESS;
             break;
         case 4:
+            Levelorder(current);
+            return EXIT_SUCCESS;
             break;
         case 5:
             printf("\n\tKoji element zelis izbrisat? ");
@@ -132,6 +137,40 @@ int Postorder(Position current){
         Postorder(current->left);
         Postorder(current->right);
         printf("\n%d\n",current->value);
+    }
+    return EXIT_SUCCESS;
+}
+
+int Levelorder(Position current){
+    int depth = Depth(current);
+    for (int i = depth; i > 0; i--)
+        CurrentLevel(current, i);
+}
+
+int Depth(Position current){
+    if (current == NULL)
+        return EXIT_SUCCESS;
+    else
+    {
+        int left_depth = Depth(current->left);
+        int right_depth = Depth(current->right);
+
+        if (left_depth > right_depth)
+            return (left_depth + 1);
+        else
+            return (right_depth + 1);
+    }
+}
+
+int CurrentLevel(Position current, int level){
+    if (current == NULL)
+        return EXIT_SUCCESS;
+    if (level == 1)
+        printf("%d ", current->value);
+    else if (level > 1)
+    {
+        CurrentLevel(current->left, level - 1);
+        CurrentLevel(current->right, level - 1);
     }
     return EXIT_SUCCESS;
 }
