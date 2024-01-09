@@ -19,6 +19,8 @@ Position Add(Position,int);
 int Preorder(Position);
 int Inorder(Position);
 int Postorder(Position);
+Position Delete(Position,int);
+Position Find(Position);
 
 int main(){
     
@@ -71,8 +73,14 @@ Position Menu(int service_id, Position current){
         case 4:
             break;
         case 5:
+            printf("\n\tKoji element zelis izbrisat? ");
+            scanf(" %d", &new_value);
+            Delete(current,new_value);
+            return EXIT_SUCCESS;
             break;
         case 6:
+            Find(current);
+            return EXIT_SUCCESS;
             break;
         case 7:
             exit(0);//exit(0) means successful ending of programs workings and tidy closing up of all streams and stuff
@@ -126,4 +134,70 @@ int Postorder(Position current){
         printf("\n%d\n",current->value);
     }
     return EXIT_SUCCESS;
+}
+
+Position Delete(Position current, int del_value){//3 different cases
+    Position temporary_node=(Position)malloc(sizeof(Node));
+    Position parent_node=(Position)malloc(sizeof(Node));
+    Position next_node=(Position)malloc(sizeof(Node));
+    if(current==NULL){
+        return current;
+    }
+    if(current->value > del_value){
+        current->left=Delete(current->left, del_value);
+        return current;
+    }
+    if(current->value < del_value){
+        current->right=Delete(current->right, del_value);
+        return current;
+    }
+    //in previous steps we found node we want to delete, we located it so current is that node
+    if(current->left==NULL){
+        temporary_node=current->right;
+        free(current);
+        return temporary_node;
+    }
+    else if(current->right==NULL){
+        temporary_node=root->left;
+        free(current);
+        return(temporary_node);
+    }
+    //lines above dealt with case of having one or none kids
+    else{
+        parent_node=current; //parent node is node with 2 kids
+        next_node=current->right;
+        while(next_node->left!=NULL){
+            parent_node=next_node;
+            next_node=next_node->left;
+        }
+        if(parent_node!=current){
+            parent_node->left=next_node->right;
+        }
+        else{
+            parent_node->right=next_node->right;
+        }
+        current->value = next_node->value;
+        free(next_node);
+        return(current);
+        
+    }
+}
+
+
+Position Find(Position current){
+    int find_this_value = 0;
+    printf("What value are you searching for?\n");
+    scanf("%d",&find_this_value);
+    while(current!=NULL){
+        if(current->value==find_this_value){
+            printf("Node with value %d is found!", find_this_value);
+            return current;
+        }
+        if(current->value < find_this_value){
+            current=current->right;
+        }
+        if(current->value > find_this_value){
+            current=current->left;
+        }
+    }
 }
