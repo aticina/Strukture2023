@@ -26,6 +26,7 @@ int CurrentLevel(Position, int);
 Position Delete(Position,int);
 Position Find(Position);
 int Replace(Position);
+int InorderInfile(Position);
 
 int main(){
     
@@ -48,7 +49,8 @@ int main(){
         "6 -find node\n"
         "7 -replace the tree\n"
         "8 -randomly generated tree\n"
-        "9 -exit program\n\n"
+        "9 -inorder in file\n"
+        "10 -exit program\n\n"
         "Your choice: \n");
         scanf("%d", &service_id);
         Menu(service_id,&Root);
@@ -105,7 +107,13 @@ Position Menu(int service_id, Position current){
                 if(random_value<10) continue;
                 AddRandom(current, random_value);
             }
+            return EXIT_SUCCESS;
+            break;
         case 9:
+            InorderInfile(current);
+            return EXIT_SUCCESS;
+            break;
+        case 10:
             exit(0);//exit(0) means successful ending of programs workings and tidy closing up of all streams and stuff
             break;
         
@@ -164,6 +172,15 @@ int Inorder(Position current){
     return EXIT_SUCCESS;
 }
 
+int InorderInfile(Position current){
+    FILE
+    if(current!=NULL){
+        Inorder(current->left);
+        fprintf("\n%d\n", current->value);
+        Inorder(current->right);
+    }
+    return EXIT_SUCCESS;
+}
 int Postorder(Position current){
     if(current!=NULL){
         Postorder(current->left);
