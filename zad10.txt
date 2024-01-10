@@ -1,0 +1,68 @@
+10. Napisati program koji čita datoteku drzave.txt u kojoj su zapisani nazivi pojedinih država. Uz
+ime države u datoteci se nalazi i ime dodatne datoteke u kojoj se nalaze gradovi pojedine
+države. Svaka datoteka koja predstavlja državu sadrži popis gradova u formatu naziv_grada,
+broj_stanovnika.
+a) Potrebno je formirati sortiranu vezanu listu država po nazivu. Svaki čvor vezane liste
+sadrži stablo gradova sortirano po broju stanovnika, zatim po nazivu grada.
+b) Potrebno je formirati stablo država sortirano po nazivu. Svaki čvor stabla sadrži vezanu
+listu gradova sortiranu po broju stanovnika, zatim po nazivu grada.
+Nakon formiranja podataka potrebno je ispisati države i gradove te omogućiti korisniku putem
+tastature pretragu gradova određene države koji imaju broj stanovnika veći od unosa na
+tastaturi.
+
+DAKLE,
+PRVO ČITANJEM IZ FILEOVA RADIMO SORTIRANE STRUKTURE. (možda i to staviti u funkcije)
+DRUGO FUNKCIJU ZA ISPIS CIJELIH STRUKTURA, PRONAĐI SVE GRADOVE KOJI IMAJU VIŠE STANOVNIKA OD UNESENE VRIJEDNOSTI(KORISNIK UNOSI VRIJEDNOST).
+
+A)
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define MAX_CHAR 1024
+
+struct country;
+typedef struct country* c_Position;
+typedef struct country{
+    char name[MAX_CHAR];
+    c_Position next;
+} Country;
+
+struct town;
+typedef struct town* t_Position;
+typedef struct town{
+    int population;
+    char name[MAX_CHAR];
+    t_Position left;
+    t_Position right;
+} Town;
+
+int main(){
+    
+return EXIT_SUCCESS;
+}
+
+B)
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define MAX_CHAR 1024
+
+struct country;
+typedef struct country* c_Position;
+typedef struct country{
+    char name[MAX_CHAR];
+    c_Position left;
+    c_Position right;
+} Country;
+
+struct town;
+typedef struct town* t_Position;
+typedef struct town{
+    int population;
+    char name[MAX_CHAR];
+    t_Position next;
+} Town;
