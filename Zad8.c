@@ -321,5 +321,6 @@ int ReadFile(){
         fscanf(fp,"%d",&buff);
         printf("%d",buff);
     }
+    fclose(fp);
     return EXIT_SUCCESS;
 }
