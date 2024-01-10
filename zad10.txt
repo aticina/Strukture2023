@@ -38,11 +38,15 @@ typedef struct town{
     t_Position right;
 } Town;
 
+c_Position CreateCombinedStructure();//function that will call other functions in order to make connected list with tress as its members,automatically called from main and returns head of the list
 int main(){
-    
+        CreateCombinedStructure();
 return EXIT_SUCCESS;
 }
 
+c_Position CreateCombinedStructure(){
+
+}
 B)
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
@@ -66,3 +70,19 @@ typedef struct town{
     char name[MAX_CHAR];
     t_Position next;
 } Town;
+
+SA SATA!
+#define FAILED_TO_MALLOC (NULL) -nande te yo..?
+he made it so each struct can be both tree and list-dubious decision memorywise, but flexy
+in something we got Position TownHead or TownRoot in country struct
+readandfillcountriedfunction,createnewcountryfrombufferfunction,inserttownafterfunction(town position current one, townposition new one),insertnewtowntreefunction,insertsortednewtownlist,insertsortednewcounttrylistfunction,priintftowntreeinorderfunction(townposition townroottree)
+
+ploča: files in files sorta
+države.txt
+    hrvstaka hrv.txt
+        splid 20 000
+        zadar 4 0000
+    belgija bel.txt
+        gent 3 000 000
+        antherpend 10 000 000
+stablo se prvo napravi pa se onda doda listi u njegovom kodu
