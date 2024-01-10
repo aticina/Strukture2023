@@ -12,10 +12,16 @@ typedef struct node{
     Position left;
     Position right;
 } Node;
-
+struct cvor;
+typedef struct cvor* Pozicija;
+typedef struct cvor{
+    int vrijednost;
+    Pozicija next;
+} Cvor;
 Position Menu(int,Position);//we are returning Position cause we are always at some node, we must keep thrack of where during and after every action
 Position CreateNode(int);
 Position Add(Position,int);
+Position AddRandom(Position,int);
 int Preorder(Position);
 int Inorder(Position);
 int Postorder(Position);
@@ -24,11 +30,12 @@ int Depth(Position);
 int CurrentLevel(Position, int);
 Position Delete(Position,int);
 Position Find(Position);
+int Replace(Position);
 
 int main(){
     
     int first_root_value=0;
-    int service_id=8;
+    int service_id=1000;
     Node Root={.value=0, .left=NULL, .right=NULL};
     
     printf("Hello ^^ welcome to binary tree! Please provide value for root node: \n");
@@ -44,7 +51,9 @@ int main(){
         "4 -levelorder\n"
         "5 -delete node\n"
         "6 -find node\n"
-        "7 -exit program\n\n"
+        "7 -replace the tree\n"
+        "8 -randomly generated tree\n"
+        "9 -exit program\n\n"
         "Your choice: \n");
         scanf("%d", &service_id);
         Menu(service_id,&Root);
@@ -54,6 +63,8 @@ int main(){
 
 Position Menu(int service_id, Position current){
     int new_value=0;
+    int random_value=0;
+    int number_of_nodes=0;
     switch(service_id){
         case 0:
             printf("New value?\n");
@@ -88,8 +99,21 @@ Position Menu(int service_id, Position current){
             return EXIT_SUCCESS;
             break;
         case 7:
+            Replace(current);
+            return EXIT_SUCCESS;
+            break;
+        case 8:
+            printf("How many nodes do you want?\n");
+            scanf("%d",&number_of_nodes);
+            for(int j=0; j<number_of_nodes;j++){
+                random_value=(rand()%90);
+                if(random_value<10) continue;
+                AddRandom(current, random_value);
+            }
+        case 9:
             exit(0);//exit(0) means successful ending of programs workings and tidy closing up of all streams and stuff
             break;
+        
     }
 }
 
@@ -112,6 +136,19 @@ Position Add(Position current, int value){
         current->right=Add(current->right,value);
     }
     return current;//just in case nothing happens..?
+}
+
+Position AddRandom(Position current, int random_value){
+    if(current==NULL){
+        return CreateNode(random_value);
+    }
+    else if(current->value>random_value){
+        current->left=AddRandom(current->left,random_value);
+    }
+    else if(current->value<random_value){
+        current->right=AddRandom(current->right,random_value);
+    }
+    return current;
 }
 
 int Preorder(Position current){
@@ -239,4 +276,11 @@ Position Find(Position current){
             current=current->left;
         }
     }
+}
+
+int Replace(Position current){
+    if(current==NULL){
+        return 0;}
+    else{
+        return(current->value + Replace(current->left) + Replace(current->right));}
 }
