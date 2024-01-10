@@ -12,12 +12,7 @@ typedef struct node{
     Position left;
     Position right;
 } Node;
-struct cvor;
-typedef struct cvor* Pozicija;
-typedef struct cvor{
-    int vrijednost;
-    Pozicija next;
-} Cvor;
+
 Position Menu(int,Position);//we are returning Position cause we are always at some node, we must keep thrack of where during and after every action
 Position CreateNode(int);
 Position Add(Position,int);
