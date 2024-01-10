@@ -27,6 +27,7 @@ Position Delete(Position,int);
 Position Find(Position);
 int Replace(Position);
 int InorderInfile(Position);
+int ReadFile();
 
 int main(){
     
@@ -50,7 +51,8 @@ int main(){
         "7 -replace the tree\n"
         "8 -randomly generated tree\n"
         "9 -inorder in file\n"
-        "10 -exit program\n\n"
+        "10 -read file\n"
+        "11 -exit program\n\n"
         "Your choice: \n");
         scanf("%d", &service_id);
         Menu(service_id,&Root);
@@ -114,6 +116,10 @@ Position Menu(int service_id, Position current){
             return EXIT_SUCCESS;
             break;
         case 10:
+            ReadFile();
+            return EXIT_SUCCESS;
+            break;
+        case 11:
             exit(0);//exit(0) means successful ending of programs workings and tidy closing up of all streams and stuff
             break;
         
@@ -173,12 +179,18 @@ int Inorder(Position current){
 }
 
 int InorderInfile(Position current){
-    FILE
+    FILE* fp;
+    fp=fopen("tekst.txt","w");
+    if(!fp){
+        printf("File failed to open");
+        return EXIT_FAILURE;
+    }
     if(current!=NULL){
         Inorder(current->left);
-        fprintf("\n%d\n", current->value);
+        fprintf(fp,"%d\n", current->value);
         Inorder(current->right);
     }
+    fclose(fp);
     return EXIT_SUCCESS;
 }
 int Postorder(Position current){
@@ -295,4 +307,19 @@ int Replace(Position current){
         return 0;}
     else{
         return(current->value + Replace(current->left) + Replace(current->right));}
+}
+
+int ReadFile(){
+    int buff=0;
+    FILE* fp;
+    fp=fopen("tekst.txt","r");
+    if(!fp){
+        printf("File failed to open");
+        return EXIT_FAILURE;
+    }
+    while(!eof()){
+        fscanf(fp,"%d",&buff);
+        printf("%d",buff);
+    }
+    return EXIT_SUCCESS;
 }
