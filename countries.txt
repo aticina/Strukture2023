@@ -1,0 +1,6 @@
+Croatia cro_towns.txt
+France fra_towns.txt
+Italy ita_towns.txt
+Belgium bel_towns.txt
+Canada can_towns.txt
+Japan jap_towns.txt
