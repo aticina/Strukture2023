@@ -86,3 +86,84 @@ države.txt
         gent 3 000 000
         antherpend 10 000 000
 stablo se prvo napravi pa se onda doda listi u njegovom kodu
+----------------------first draft, a bad one at that-------------
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define MALLOC_FAIL (NULL)
+#define MAX_CHAR 1024
+
+struct country;
+typedef struct country* c_Position;
+typedef struct country{
+    char name[MAX_CHAR];
+    c_Position next;
+} Country;
+
+struct town;
+typedef struct town* t_Position;
+typedef struct town{
+    int population;
+    char name[MAX_CHAR];
+    t_Position left;
+    t_Position right;
+} Town;
+
+c_Position MakeWholeStructure(c_Position);//first function to get called, it makes whole list-whose-memebers-are-tress thing before client inputs anything,it returns head of the list-whose-memebers-are-tress
+//so I need it to do many things...let's first have it make a list by reading from a file, also this function will have many functions within itself
+//1st read from country file and fill in all list memebers or am I buliding everything all at once as I go?
+//Approach A: I make list, I go through list and make list-whose-memebers-are-tres
+//Approach B: I makes 1st list memebers and its trees, I make 2nd list memeber and its trees
+c_Position CreateListMember();
+c_Position AddListMember(c_Position);
+
+int main(){
+    
+    Country C_Head = {.name=" ",.next=NULL};
+    
+    MakeWholeStructure(&C_Head);
+    
+    return EXIT_SUCCESS;
+}
+
+c_Position MakeWholeStructure(c_Position c_current){
+    
+    FILE* c_fp;
+    c_fp=fopen("countries.txt","r");
+    if(!c_fp){
+        printf("File countries.txt did not open!");
+        return NULL;
+    }
+    
+    while(!feof(c_fp)){
+        
+        c_Position c_new = (c_Position)malloc(sizeof(Country));
+        if(!c_new){
+            printf("Malloc did not work!");
+            return MALLOC_FAIL;
+        }
+        c_new->name={0};
+        c_new->next=NULL;
+        
+        fscanf(c_fp,"%s %*s",c_new->name);
+        printf("Just a check, this should print country_name %s \n",c_new->name);
+        
+        while(c_current!=NULL){//we need to see where to add new element in preexisting list
+        //strcmp==0 is impossible cause no two countries share the name
+            if(strcmp(c_current->name,c_new->name)>0 && strcmp(c_current->next->name,c_new->name)<0){
+                //this means we should add new member after current one
+                c_new->next=c_current->next;
+                c_current->next=c_new;
+            }
+            else{
+                c_current=c_current->next;
+            }
+        }
+        //after this while loop we know that newest element is part of the list know
+        free(c_new); //I guess? Cause we did all we needed with it, it is part of list now, so bye bye temp dynamic memory
+    }
+    //after this while we have a list with countires, but no trees
+}
