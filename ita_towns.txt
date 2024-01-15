@@ -1,0 +1,5 @@
+Milan 250 000
+Rome 900 000
+Venice 400 000
+Trieste 35 000
+Ancona 200 000
