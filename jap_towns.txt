@@ -1,0 +1,5 @@
+Tokio 2 000 000
+Chiba 45 000
+Kyoto 28 000
+Kobe 55 000
+Osaka 800 000
