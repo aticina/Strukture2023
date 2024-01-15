@@ -1,0 +1,5 @@
+Paris 200 000
+Lyon 44 000
+Nica 6 000
+Caen 50 000
+Bastia 10 000
