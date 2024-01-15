@@ -1,3 +1,4 @@
+Po savjetu asistentice: mogu imati odvojeno listu i stabla, ne moram imati hibrida, samo lista mora imati pokazivač na root stabla koji može imati vrijednost, izgrađuj simultano, možeš koristiti bazne funkcije za ovo
 10. Napisati program koji čita datoteku drzave.txt u kojoj su zapisani nazivi pojedinih država. Uz
 ime države u datoteci se nalazi i ime dodatne datoteke u kojoj se nalaze gradovi pojedine
 države. Svaka datoteka koja predstavlja državu sadrži popis gradova u formatu naziv_grada,
