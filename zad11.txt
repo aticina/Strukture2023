@@ -1,0 +1,7 @@
+11.tekst here-nadogradi se na 10.
+funckcija za ubaciticountiresuhash
+funkcija unsigned int calculate hash value for each country name, ne treba nam unsigned ovdje pa uzmi int,prima ime države
+ključ je hash value%velicina hash tablice
+dodavanje na početak liste kad dodajemo države u liste
+int printallcountriesfromhash
+ogledni zadaci na merlinu za rješiti za vježbu za ispit
