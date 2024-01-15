@@ -1,0 +1,5 @@
+Delta 55 000
+Vancouver 300 000
+Quebec 500 000
+Winnipeg 6 000
+Victoria 200
