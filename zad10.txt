@@ -167,3 +167,122 @@ c_Position MakeWholeStructure(c_Position c_current){
     }
     //after this while we have a list with countires, but no trees
 }
+---newer---
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define MALLOC_FAIL (NULL)
+#define MAX_CHAR 1024
+
+struct chimera;
+typedef struct chimera* Position;
+typedef struct chimera{
+    char country_name[MAX_CHAR];
+    char town_name[MAX_CHAR];
+    int population;
+    Position next;
+    Position left;
+    Position right;
+} Chimera;
+
+Position MakeWholeStructure(Position);//first function to get called, it makes whole list-whose-memebers-are-tress thing before client inputs anything,it returns head of the list-whose-memebers-are-tress
+//so I need it to do many things...let's first have it make a list by reading from a file, also this function will have many functions within itself
+//1st read from country file and fill in all list memebers or am I buliding everything all at once as I go?
+//Approach A: I make list, I go through list and make list-whose-memebers-are-tres
+//Approach B: I makes 1st list memebers and its trees, I make 2nd list memeber and its trees
+int ReadOnlyList(Position);
+
+int main(){
+    
+    Chimera Head = {.country_name=" ",.town_name=" ",.population=0,.next=NULL,.left=NULL,.right=NULL};
+    
+    MakeWholeStructure(&Head);
+    //printf("did we get back?"); yes we did, so issue is within ReadOnlyList()
+    ReadOnlyList(Head.next);
+    
+    return EXIT_SUCCESS;
+}
+
+Position MakeWholeStructure(Position current){
+    
+    Position safekeep=current;
+    //checking if safekeep is safekeeping head
+    //printf("%p \n",current);
+    //printf("%p",safekeep);
+    //it is keeping it alright
+    
+    FILE* c_fp;
+    c_fp=fopen("countries.txt","r");
+    if(!c_fp){
+        printf("File countries.txt did not open!");
+        return NULL;
+    }
+    
+    fscanf("%s %*s",)
+    while(!feof(c_fp)){
+        
+        Position new = (Position)malloc(sizeof(Chimera));
+        if(!new){
+            printf("Malloc did not work!");
+            return MALLOC_FAIL;
+        }
+        //new->country_name=" "; error! assignment to expression with array type, stackoverflow says it is cause after
+        //declaration of new with malloc it's values self-initialized with trash, so there is something in strings alreaday
+        //and to shange it I need to use strcpy
+        //new->town_name=" ";
+        strcpy(new->country_name,"");
+        strcpy(new->town_name,"");
+        //well, advice from stack overflow worked
+        new->population=0;
+        new->next=NULL;
+        new->left=NULL;
+        new->right=NULL;
+        
+        fscanf(c_fp,"%s %*s",new->country_name);
+        printf("Just a check, this should print country_name %s \n",new->country_name);
+        //code works for sure up to this point :) it prints Croatia France Italy Belgium Canada Japan
+        printf("\nline 76 %p",current);
+        current=safekeep;
+        while(current!=NULL){//we need to see where to add new element in preexisting list
+        //strcmp==0 is impossible cause no two countries share the name
+            printf("\nline 79 %p",current);
+            //this if is only entered once and that is in 1st loop of while(!feof(c_fp)), we need to put someone in list to be able to sort
+            if(current->next==NULL){//meaning list is empty cause current is head always thanks to safekeep that keeps rewinding the list
+                new->next=current->next;//aka NULL
+                current->next=new;
+            }
+            //with current->next->country name we avoid head which is empty, and this loop always starts with current as head
+            else if(strcmp(current->next->country_name,new->country_name)>0 /*&& strcmp(current->next->next->country_name,new->country_name)<0*/){
+                //this means we should add new member in front of current->next memeber
+                new->next=current->next->next;
+                current->next=new;
+            }
+            else{
+                current->next=current->next->next;
+            }
+        }
+        //after this while loop we know that newest element is part of the list know
+        free(new); //I guess? Cause we did all we needed with it, it is part of list now, so bye bye temp dynamic memory
+    }
+    //after this while we have a list with countires, but no trees, each list memeber has ability to be tree root
+    current=safekeep;
+    return safekeep;
+}
+
+
+int ReadOnlyList(Position current){
+    //printf("We are in ReadOnlyList() function");
+    if(current==NULL){
+        printf("This list is empty!");
+        return EXIT_FAILURE;
+    } //oh it's empty
+    while(current!=NULL){
+        printf("Now printing countires in sorted list:\n");
+        printf("%s \n",current->country_name);
+        current=current->next;
+    }
+    return EXIT_SUCCESS;
+}
