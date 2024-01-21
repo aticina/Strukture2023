@@ -24,7 +24,7 @@ int AddAtEnd(Position);
 int AddAfter(Position);
 int AddBefore(Position);
 Position FindElement(Position);
-Position Predecessor(Position);
+Position Predecessor(Position,Position);
 int ShowList(Position);
 int DeleteAll(Position);
 
@@ -79,20 +79,27 @@ int Menu(Position current, char name_of_service){
             break;
         //case "D":
         case 'P':
-            Predecessor(current->next);
+            Position temp=(Position)malloc(sizeof(Cat));
+            temp=FindElement(current->next); //due to how FindElement does not receive head, but head next, it is impossble to ask to find predecessor of head
+            if(temp==NULL){
+                printf("There is no such cat, try again.");
+                return EXIT_FAILURE;
+            }
+            Predecessor(current->next, temp);
+            free(temp);
             break;
         case 'S':
-            Position temp=(Position)malloc(sizeof(Cat));
-            temp=FindElement(current->next);
-            if(temp==NULL){
+            Position _temp=(Position)malloc(sizeof(Cat));
+            _temp=FindElement(current->next);
+            if(_temp==NULL){
                 printf("There is no element you want to find successr of.");
                 break;
             }
             else{
                 printf("Successor is:\n");
-                printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",temp->next->name,temp->next->age,temp->next->weight_kg,temp->next->dimensions[0],temp->next->dimensions[1]);
+                printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",_temp->next->name,_temp->next->age,_temp->next->weight_kg,_temp->next->dimensions[0],_temp->next->dimensions[1]);
             }
-            free(temp);
+            free(_temp);
             break;
         case 'X':
             break;
@@ -169,8 +176,16 @@ int AddAfter(Position current){ //current is head
 }
 
 int AddBefore(Position current){ //current is head
-    
+    Position new=CreateMember();
+    Position which_we_will_add_before=FindElement(current->next);
+    Position temp=(Position)malloc(sizeof(Cat));
+    temp=Predecessor(current->next, which_we_will_add_before);
+    new->next=which_we_will_add_before;
+    temp->next=new;
+    free(temp);
+    return EXIT_SUCCESS;
 }
+
 Position FindElement(Position current){ //current is head->next aka 1st real element
     char f_name[MAX_CHAR]={0};
     int f_age=0;
@@ -189,23 +204,17 @@ Position FindElement(Position current){ //current is head->next aka 1st real ele
     return NULL;
 }
 
-Position Predecessor(Position predecessor){ //current is 1st non-empty element
-    Position temp=(Position)malloc(sizeof(Cat));
-    temp=FindElement(predecessor); //due to how FindElement does not receive head, but head next, it is impossble to ask to find predecessor of head
-    if(temp==NULL){
-        printf("There is no such cat, try again.");
-        return NULL;
-    }
-    if(predecessor==temp){
+Position Predecessor(Position predecessor, Position current){ //predecessor is 1st non-empty element, current is who we want to find predecessor of
+    
+    if(predecessor==current){
         printf("This element is 1st in the linked list and as such does not have predecessor.");
         return NULL;
     }
     while(predecessor->next!=NULL){ //we don't need to go till predecessor is very last element cause predecessor by definition can't be last
         //so we are not checking if last element is predecessor cause that is impossible
-        if(predecessor->next == temp){
+        if(predecessor->next == current){
             printf("Predecessor is:\n");
             printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",predecessor->name,predecessor->age,predecessor->weight_kg,predecessor->dimensions[0],predecessor->dimensions[1]);
-            free(temp);
             return predecessor;
         }   
         else{
@@ -234,9 +243,6 @@ int DeleteAll(Position current){//current is head
     printf("nothing yet");
 }
 
-    }
-    printf("nothing yet");
-}
 Greška
 Welcome to linked list of cats :3 
  Please write down a letter represeting a service you want to use. We offer:
