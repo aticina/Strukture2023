@@ -20,7 +20,11 @@ typedef struct cat{
 int Menu(Position,char);
 Position CreateMember();
 int AddAtBeginning(Position);
-//int AddAtEnd(Position);
+int AddAtEnd(Position);
+int AddAfter(Position);
+int AddBefore(Position);
+Position FindElement(Position);
+Position Predecessor(Position);
 int ShowList(Position);
 int DeleteAll(Position);
 
@@ -58,16 +62,38 @@ int Menu(Position current, char name_of_service){
             //printf("We in A case");
             AddAtBeginning(current);
             break;
-        //case "a":
-        //case "Y":
-        //case "Z":
+        case 'a':
+            AddAtEnd(current);
+            break;
+        case 'Y':
+            AddAfter(current);
+            break;
+        case 'Z':
+            AddBefore(current);
+                break;
         case 'L':
             ShowList(current->next);
             break;
-        //case "F":
+        case 'F':
+            FindElement(current->next);
+            break;
         //case "D":
-        //case "P":
-        //case "S":
+        case 'P':
+            Predecessor(current->next);
+            break;
+        case 'S':
+            Position temp=(Position)malloc(sizeof(Cat));
+            temp=FindElement(current->next);
+            if(temp==NULL){
+                printf("There is no element you want to find successr of.");
+                break;
+            }
+            else{
+                printf("Successor is:\n");
+                printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",temp->next->name,temp->next->age,temp->next->weight_kg,temp->next->dimensions[0],temp->next->dimensions[1]);
+            }
+            free(temp);
+            break;
         case 'X':
             break;
     }
@@ -114,6 +140,80 @@ int AddAtBeginning(Position current){
     return EXIT_SUCCESS;
 }
 
+int AddAtEnd(Position current){ //current is head
+    while(current->next!=NULL){
+        current=current->next;
+    } //while loop ensures that current is last element in the list
+    //cause when we go to check in for condition with last element
+    //it will fail cause next pointer of last element is pointing at NULL
+    //so current is last element of list for it won't enter loop and iterate to next
+    Position new=CreateMember();
+    current->next=new;
+    new->next=NULL;
+}
+
+int AddAfter(Position current){ //current is head
+    Position temp=(Position)malloc(sizeof(Cat));
+    temp=FindElement(current->next);
+    if(temp==NULL){
+        printf("There is no such cat, we cannot proceed with adding process.");
+        return EXIT_FAILURE;
+    }
+    else{
+        Position new=CreateMember();
+        new->next=temp->next;
+        temp->next=new;
+    }
+    free(temp);
+    return EXIT_SUCCESS;
+}
+
+int AddBefore(Position current){ //current is head
+    
+}
+Position FindElement(Position current){ //current is head->next aka 1st real element
+    char f_name[MAX_CHAR]={0};
+    int f_age=0;
+    printf("Input name and age of the cat you want to find(be it for data on the cat or for doing something else like adding, predecessor, successor etc.):\n");
+    scanf("%s %d", f_name, &f_age);
+    while(current!=NULL){
+        if(!(strcmp(current->name,f_name)) && current->age==f_age){
+            printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",current->name,current->age,current->weight_kg,current->dimensions[0],current->dimensions[1]);
+            return current;
+        }
+        else{
+            current=current->next;
+        }
+    }
+    printf("There is no such cat.");
+    return NULL;
+}
+
+Position Predecessor(Position predecessor){ //current is 1st non-empty element
+    Position temp=(Position)malloc(sizeof(Cat));
+    temp=FindElement(predecessor); //due to how FindElement does not receive head, but head next, it is impossble to ask to find predecessor of head
+    if(temp==NULL){
+        printf("There is no such cat, try again.");
+        return NULL;
+    }
+    if(predecessor==temp){
+        printf("This element is 1st in the linked list and as such does not have predecessor.");
+        return NULL;
+    }
+    while(predecessor->next!=NULL){ //we don't need to go till predecessor is very last element cause predecessor by definition can't be last
+        //so we are not checking if last element is predecessor cause that is impossible
+        if(predecessor->next == temp){
+            printf("Predecessor is:\n");
+            printf("-------\nName:%s\nAge:%d\nWeight(kg):%f\nHeight:%lf\nLength:%lf\n-------\n",predecessor->name,predecessor->age,predecessor->weight_kg,predecessor->dimensions[0],predecessor->dimensions[1]);
+            free(temp);
+            return predecessor;
+        }   
+        else{
+            predecessor=predecessor->next;
+        }
+    }
+    printf("Unable to find predecessor despite knowing the element-system fail :/");
+}
 int ShowList(Position current){ //current is 1st non empty character
     if(current==NULL){
         printf("Empty list!");
@@ -130,6 +230,10 @@ int DeleteAll(Position current){//current is head
     if(current==NULL){
         printf("There is nothing to delete!");
         return EXIT_FAILURE;
+    }
+    printf("nothing yet");
+}
+
     }
     printf("nothing yet");
 }
