@@ -237,3 +237,180 @@ int DeleteAll(Position current){//current is head
     }
     printf("nothing yet");
 }
+Greška
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+F
+FInput name and age of the cat you want to find(be it for data on the cat or for doing something else like adding, predecessor, successor etc.):
+Zero
+0
+-------
+Name:Zero
+Age:0
+Weight(kg):0.000000
+Height:0.000000
+Length:0.000000
+-------
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+F
+FInput name and age of the cat you want to find(be it for data on the cat or for doing something else like adding, predecessor, successor etc.):
+Uno
+1
+-------
+Name:Uno
+Age:1
+Weight(kg):1.000000
+Height:1.000000
+Length:1.000000
+-------
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+Y
+YInput name and age of the cat you want to find(be it for data on the cat or for doing something else like adding, predecessor, successor etc.):
+Uno
+1
+-------
+Name:Uno
+Age:1
+Weight(kg):1.000000
+Height:1.000000
+Length:1.000000
+-------
+
+Name?
+Duo
+Age?
+2
+Weight?
+2
+Height?
+2
+Length?
+2
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+L
+L-------
+Name:Zero
+Age:0
+Weight(kg):0.000000
+Height:0.000000
+Length:0.000000
+-------
+-------
+Name:��k�
+Age:1
+Weight(kg):1.000000
+Height:1.000000
+Length:1.000000
+-------
+-------
+Name:Duo
+Age:2
+Weight(kg):2.000000
+Height:2.000000
+Length:2.000000
+-------
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+L
+L-------
+Name:Zero
+Age:0
+Weight(kg):0.000000
+Height:0.000000
+Length:0.000000
+-------
+-------
+Name:��k�
+Age:1
+Weight(kg):1.000000
+Height:1.000000
+Length:1.000000
+-------
+-------
+Name:Duo
+Age:2
+Weight(kg):2.000000
+Height:2.000000
+Length:2.000000
+-------
+Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
+F
+FInput name and age of the cat you want to find(be it for data on the cat or for doing something else like adding, predecessor, successor etc.):
+Uno
+1
+There is no such cat.Welcome to linked list of cats :3 
+ Please write down a letter represeting a service you want to use. We offer:
+A -Add a cat at the begining of the linked list
+a -Add a cat at the end of the linked list
+Y -add a cat after certain y member
+Z -add a cat before certain z member
+L -List all cats from the current linked list
+F -Find the cat
+D -Delete the cat from the linked list
+P -find predecessor
+S -find successor
+X -delete whole list and end session.
