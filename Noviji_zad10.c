@@ -498,3 +498,121 @@ int printList(linkedList states)
     }
     return EXIT_SUCCESS;
 }
+-------------------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define MAX_CHAR 1024
+
+//for countires that are linked list
+struct element;
+typedef struct element* c_Position;
+typedef struct element{
+    char country_name[MAX_CHAR];
+    c_Position next;
+    c_Position p_tree; //this will point to a root of attached tree
+} Element;
+
+//for towns that are in trees
+struct node;
+typedef struct node* t_Position;
+typedef struct node{
+    int population;
+    char town_name[MAX_CHAR];
+    t_Position left;
+    t_Position right;
+} Node;
+
+int createList(c_Position);
+//c_Position createListElement(c_Position, char[MAX_CHAR]);
+
+int main(){
+    
+    Element Head={.country_name={0},.next=NULL,.p_tree=NULL};
+    createList(&Head);
+    
+    
+    return EXIT_SUCCESS;
+}
+
+int createList(c_Position c_current){
+    
+    char new_country_name[MAX_CHAR]={0};
+    char file_w_towns[MAX_CHAR]={0};
+    c_Position safekeep_Head=(c_Position)malloc(sizeof(Element));
+    safekeep_Head=c_current; //this is variable that will always point at head of linked list
+    
+    FILE* fp = NULL;
+    fp=fopen("countries.txt","r");
+    if(!fp){
+        printf("File countries.txt failed to open!");
+        return EXIT_FAILURE;
+    }
+    while(!feof(fp)){
+        fscanf(fp,"%s %s", new_country_name, file_w_towns);
+        //createListElement(c_current, new_country_name); //c_current == &Head
+        //printf("back");
+        c_Position new_list_element=(c_Position)malloc(sizeof(Element));
+        strcpy(new_list_element->country_name,new_country_name);
+        new_list_element->next=NULL;
+        new_list_element->p_tree=NULL;
+        printf("%s %p %p \n", new_list_element->country_name, new_list_element->next, new_list_element->p_tree);
+        //at this point we have element, now we need to sort it into preexisting list, we go from begining
+        
+        //this will check if list is empty and if yes add with no condition
+        c_current=safekeep_Head; //with this we ensure that for each element we have a head to start from
+        if(c_current->next==NULL){
+            c_current->next=new_list_element;
+        }
+        else if(c_current->next!=NULL){//this c_current is &Head
+            //we are going from 1st real/nonempty element
+            
+            while(c_current!=NULL && c_current->next!=NULL){ //2nd condition is so we don't deal with adding behind last in if loop
+                if((strcmp(new_list_element->country_name,c_current->next->country_name))>0){
+                    new_list_element->next=c_current->next;
+                    c_current->next=new_list_element;
+                }
+                else if(c_current!=NULL && c_current->next==NULL){ //with 2nd condition we make sure we are at last element
+                    c_current->next=new_list_element;
+                    //we don't need new_list_element->next=NULL cause we initialized it like that already
+                }
+                else{
+                    c_current=c_current->next;
+                }
+                
+            }
+        }
+        showList(safekeep_Head);//safekeep_Head==&Head
+        
+    }
+    free(safekeep_Head); //this is a pointer element we need temporarily
+    fclose(fp);
+    return EXIT_SUCCESS;
+}
+
+int showList(c_Position c_current) {
+
+    if (c_current == NULL) { //checking if we got any list to go through to begin with, if not then this function is useless
+        printf("This list is empty!");
+        return EXIT_FAILURE;
+    }
+
+    while (c_current != NULL) {
+        printf("\n");
+        printf("\n ----- \n Country: %s Next: %p P-Tree: %p", c_current->country_name, c_current->next, c_current->p_tree);
+        c_current = c_current->next;
+    }
+
+    return EXIT_SUCCESS;
+}
+/*c_Position createListElement(c_Position c_current, char new_country_name[MAX_CHAR]){ //c_current==&Head
+    c_Position new_list_element=(c_Position)malloc(sizeof(Element));
+    new_list_element->country_name=new_country_name;
+    new_list_element->next=NULL;
+    new_list_element->p_tree=NULL;
+    printf("%s %p %p \n", new_list_element->country_name, new_list_element->next, new_list_element->p_tree);
+    return new_list_element; //with this our list element is initialized and ready to be added sortedly
+}*/
