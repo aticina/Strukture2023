@@ -1,0 +1,74 @@
+/* Make a stack:
+-structure realized through linked list(1 pointer)
+-LIFO
+-has functions push and pop
+
+"5. Napisati program koji iz datoteke čita postfiks izraz i zatim korištenjem stoga računa
+rezultat. Stog je potrebno realizirati preko vezane liste" 
+
+Datoteka:
+234+1-*0+
+
+Stack will be alive in a sense that we will be calculating as we read from file.
+Make a function stacking_Calculating() that reads elements from file and if it is an operand it pushes it onto
+the stack and if it is an operator it calculates. (all operators are of equal importance for this task)
+*/
+
+#define _CRT_SECURE_NO_WARNING
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1 
+#define MAX_CHAR 1024
+
+struct stack;
+typedef struct stack* Position;
+typedef struct stack{
+    int operand;
+    Position next;
+} Stack;
+
+int stacking_Calculating(Position);
+
+int main(){
+    
+    Stack Head={.operand=0, .next=NULL};
+    printf("\nChecking to see if these values are neutral. Head.operand %d Head.next %p", Head.operand, Head.next);
+    stacking_Calculating(&Head);
+    
+    return EXIT_SUCCESS;
+}
+
+int stacking_Calculating(Position element_Zero){
+    //element_Zero is receiving &Head
+    
+    //we will prepare needed variables-like opening a file and reading our postfix from it
+    char loaded_Postfix[MAX_CHAR]={0};
+    //we can go through string with index or pointer, we will go with pointer this time
+    //pointer must be of same type as variable it is pointing at aka char
+    char* pointer_Within_String=NULL;
+    
+    FILE* fp=NULL;
+    fp=fopen("dat.txt","r");
+    //check if we have connection to a FILE
+    if(!fp){
+        printf("File failed to open!");
+        return EXIT_FAILURE;
+    }
+    //load in postfix
+    fscanf(fp,"%s",loaded_Postfix); //we have postfix
+    printf("\nLet's see if postfix loaded correctly: %s",loaded_Postfix);
+    pointer_Within_String=loaded_Postfix[0];
+    printf("\nChecking to see what pointer is pointing at on starting position: %c", pointer_Within_String);//gives type error, but points at 2 so we good
+    
+    
+    //walking through postfix
+    while(pointer_Within_String!='\0'){
+        sscanf(loaded_Postfix)
+        pointer_Within_String++;
+    }
+    fclose(fp);
+    
+    return EXIT_SUCCESS;
+}
